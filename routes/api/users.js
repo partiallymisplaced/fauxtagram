@@ -6,7 +6,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 
 // Imports User model
-const User = require('../../modules/User');
+const User = require('../../models/User');
 
 // Test route
 router.get('/test', 
