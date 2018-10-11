@@ -5,6 +5,9 @@ const router = express.Router();
 // Bcrypt.js
 const bcrypt = require('bcryptjs');
 
+// JSON web token
+const jwt = require('jsonwebtoken');
+
 // Imports User model
 const User = require('../../models/User');
 
@@ -23,6 +26,7 @@ router.get('/test',
 // TODO:    Check if user exists by email, username or password
 router.post('/signup', (req, res) => {
     User.findOne({username: req.body.username})
+    .then(console.log(req.body))
         .then(user => {
             if(user){
                 return res.status(400).json({
@@ -36,7 +40,6 @@ router.post('/signup', (req, res) => {
                     username: req.body.username,
                     password: req.body.password
                 });
-            
                 bcrypt.genSalt(10, (err, salt) => {
                     if (err) throw err;
                     bcrypt.hash(newUser.password, salt, 
@@ -56,6 +59,36 @@ router.post('/signup', (req, res) => {
 // @route   POST api/users/login
 // @desc    Enables user login
 // @access  Public
+
+router.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    User.findOne({username})
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    user: "User not found"
+                });
+            } else {
+                bcrypt.compare(password, user.password)
+                    .then(isMatch => {
+                        if(isMatch){
+                            res.json({
+                                message: "Login is possible"
+                            });
+                        } else {
+                            return res.status(400).json({
+                                password: "Wrong password"
+                            });
+                        }
+                    })
+            }
+        })
+
+
+})
+
 
 
 
