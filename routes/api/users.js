@@ -8,22 +8,21 @@ const bcrypt = require('bcryptjs');
 // JSON web token
 const jwt = require('jsonwebtoken');
 
+// Passport
+const passport = require('passport');
+
+// Keys
+const keys = require('../../keys');
+
 // Imports User model
 const User = require('../../models/User');
-
-// Test route
-router.get('/test', 
-    (req, res) => res.json({
-        message: "Test route for users route works"
-    })
-)
 
 // @route   POST api/users/signup
 // @desc    Enables user signup
 // @access  Public
 
-// Checks if user exists by email. 
-// TODO:    Check if user exists by email, username or password
+// Checks if user exists by username 
+// TODO:    Check if user exists by email, username or phone number
 router.post('/signup', (req, res) => {
     User.findOne({username: req.body.username})
     .then(console.log(req.body))
@@ -74,9 +73,27 @@ router.post('/login', (req, res) => {
                 bcrypt.compare(password, user.password)
                     .then(isMatch => {
                         if(isMatch){
-                            res.json({
-                                message: "Login is possible"
-                            });
+                            const payload = {
+                                id: user.id, 
+                                username: user.username,
+                                email: user.email
+                            };
+                            jwt.sign(
+                                payload,
+                                keys.secretOrKey, {
+                                    expiresIn: '1h'
+                                },(err, token) => {
+                                    if (err) {
+                                        throw err
+                                    } else {
+                                        res.json({
+                                            success: true,
+                                            token: 'Bearer ' + token
+                                        });
+                                    }
+                                }
+                            );
+
                         } else {
                             return res.status(400).json({
                                 password: "Wrong password"
@@ -85,12 +102,24 @@ router.post('/login', (req, res) => {
                     })
             }
         })
-
-
 })
 
 
+// @route   GET api/users/current
+// @desc    Returns current user data
+// @access  Private || Protected
 
-
+router.get('/current', 
+    passport.authenticate('jwt', {
+        session: false
+    }), (req, res) => {
+        res.json({
+            id: req.user.id,
+            username: req.user.username,
+            email: req.user.email,
+            fullName: req.user.fullName,
+            mobileNumber: req.user.mobileNumber
+        });
+    });
 
 module.exports = router;
