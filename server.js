@@ -3,6 +3,9 @@ const app = express();
 
 const mongoose = require('mongoose');
 const db = require('./keys').mongoURI;
+const profile = require('./routes/api/profile');
+ 
+app.use('/api/profile', profile);
 
 mongoose
     .connect(db)
