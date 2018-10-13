@@ -2,8 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const Profile = require('../../modules/Profile');
-const Post = require('../../modules/Post');
+const Profile = require('../../models/Profile');
+const Post = require('../../models/Post');
 
 // @route   POST api/posts/
 // @desc    Create or edit user profile
@@ -39,3 +39,5 @@ router.post('/', passport.authenticate('jwt', {session: false}),
       });
   }
 )
+
+module.exports = router;
