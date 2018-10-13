@@ -7,7 +7,7 @@ const CommentSchema = new Schema({
         ref: 'users'
     },
     body: {
-       type: string,
+       type: String,
        required: true
     },
     date: {
@@ -22,7 +22,7 @@ const PostSchema = new Schema({
         ref: 'users'
     },
     mediaUrl: {
-        type: string,
+        type: String,
         required: true
     },
     date: {
@@ -35,6 +35,5 @@ const PostSchema = new Schema({
         ref: 'users'
     }]
 });
-
 
 module.exports = Post = mongoose.model('posts', PostSchema);
