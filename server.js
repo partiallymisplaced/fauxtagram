@@ -5,6 +5,11 @@ const app = express();
 // Mongoose
 const mongoose = require('mongoose');
 const db = require('./keys').mongoURI;
+const profile = require('./routes/api/profile');
+const posts = require('./routes/api/posts');
+ 
+app.use('/api/profile', profile);
+app.use('/api/posts', posts);
 
 // Body-parser
 const bodyParser = require('body-parser');
