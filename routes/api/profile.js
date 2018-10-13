@@ -31,7 +31,7 @@ router.post('/', passport.authenticate('jwt', {session: false}),
     profileFields.user = req.user.id;
     if (req.body.website) profileFields.website = req.body.website;
     if (req.body.bio) profileFields.bio = req.body.bio;
-    if (req.body.avatar) profileFields.handle = req.body.avatar;
+    if (req.body.avatar) profileFields.avatar = req.body.avatar;
 
     Profile.findOne({user: req.user.id})
       .then(profile => {
