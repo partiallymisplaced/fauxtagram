@@ -25,7 +25,6 @@ const User = require('../../models/User');
 // TODO:    Check if user exists by email, username or phone number
 router.post('/signup', (req, res) => {
     User.findOne({username: req.body.username})
-    .then(console.log(req.body))
         .then(user => {
             if(user){
                 return res.status(400).json({
