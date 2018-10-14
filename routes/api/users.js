@@ -16,7 +16,7 @@ const keys = require('../../keys');
 
 // Validate inputs
 const validateSignupInput = require('../../validation/signup');
-// const validateLoginInput = require('../../validation/login');
+const validateLoginInput = require('../../validation/login');
 
 // Imports User model
 const User = require('../../models/User');
