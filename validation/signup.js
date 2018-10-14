@@ -22,10 +22,10 @@ module.exports = function validateSignupInput(data) {
   if (Validator.isEmpty(data.username)) {
     errors.email = "Email cannot be empty";
   }
-  if (!Validator.isMobilePhone(data.mobileNumber)) {
-    errors.mobileNumber = "This does not look like a valid mobile number";
-  }
-  if (!Validator.isLength(data.password), {min: 6, max: 64}) {
+  // if (!Validator.isMobilePhone(data.mobileNumber)) {
+  //   errors.mobileNumber = "This does not look like a valid mobile number";
+  // }
+  if (!Validator.isLength(data.password, {min: 6, max: 64})) {
     errors.password = "Your password must be at least 6 characters long";
   }
   if (Validator.isEmpty(data.password)) {
