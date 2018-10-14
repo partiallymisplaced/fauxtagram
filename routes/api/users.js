@@ -26,7 +26,7 @@ const User = require('../../models/User');
 router.post('/signup', (req, res) => {
     User.findOne({username: req.body.username})
     .then(console.log(req.body))
-        .then(user => {
+    .then(user => {
             if(user){
                 return res.status(400).json({
                     username: "Username is already taken."
@@ -39,20 +39,22 @@ router.post('/signup', (req, res) => {
                     username: req.body.username,
                     password: req.body.password
                 });
+                
                 bcrypt.genSalt(10, (err, salt) => {
-                    if (err) throw err;
+                    if (err) { console.log(err); throw err; }
                     bcrypt.hash(newUser.password, salt, 
                         (err, hash) => {
-                            if (err) throw err;
+                            if (err) { console.log(err); throw err; }
                             newUser.password = hash;
                             newUser.save()
                                 .then(user => res.json(user))
                                 .catch(err => console.log(err));
+                            console.log("Saved user");
                         }) 
                 });
-
             }
-        });
+        })
+        .catch(err => console.log(err));;
 })
 
 // @route   POST api/users/login
@@ -80,9 +82,9 @@ router.post('/login', (req, res) => {
                             };
                             jwt.sign(
                                 payload,
-                                keys.secretOrKey, {
-                                    expiresIn: '1h'
-                                },(err, token) => {
+                                keys.secretOrKey,{
+                                     expiresIn: '1h'
+                             }, (err, token) => {
                                     if (err) {
                                         throw err
                                     } else {
