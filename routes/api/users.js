@@ -14,6 +14,10 @@ const passport = require('passport');
 // Keys
 const keys = require('../../keys');
 
+// Validate inputs
+const validateSignupInput = require('../../validation/signup');
+const validateLoginInput = require('../../validation/login');
+
 // Imports User model
 const User = require('../../models/User');
 
@@ -24,12 +28,17 @@ const User = require('../../models/User');
 // Checks if user exists by username 
 // TODO:    Check if user exists by email, username or phone number
 router.post('/signup', (req, res) => {
+    // Validates input before passing onto form
+    const {errors, isValid} = validateSignupInput(req.body);
+    if (!isValid){
+        return res.status(400).json(errors);
+    }
     User.findOne({username: req.body.username})
     .then(console.log(req.body))
     .then(user => {
             if(user){
                 return res.status(400).json({
-                    username: "Username is already taken."
+                    username: "This username is already taken."
                 })
             } else {
                 const newUser = new User({
@@ -62,6 +71,12 @@ router.post('/signup', (req, res) => {
 // @access  Public
 
 router.post('/login', (req, res) => {
+    // Validates input before passing onto form
+    const { errors, isValid } = validateLoginInput(req.body);
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     const username = req.body.username;
     const password = req.body.password;
 
@@ -69,7 +84,7 @@ router.post('/login', (req, res) => {
         .then(user => {
             if (!user) {
                 return res.status(404).json({
-                    user: "User not found"
+                    user: "Username not found"
                 });
             } else {
                 bcrypt.compare(password, user.password)
@@ -98,7 +113,7 @@ router.post('/login', (req, res) => {
 
                         } else {
                             return res.status(400).json({
-                                password: "Wrong password"
+                                password: "Password incorrect"
                             });
                         }
                     })
