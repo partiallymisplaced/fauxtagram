@@ -33,11 +33,16 @@ router.post('/signup', (req, res) => {
     if (!isValid){
         return res.status(400).json(errors);
     }
-    User.findOne({username: req.body.username})
-        .then(user => {
+  
+    const username = req.body.username;
+    const email = req.body.email;
+
+    User.findOne({ $or: [{ username: username }, { email: email }] })
+    .then(user => {
             if(user){
                 return res.status(400).json({
-                    username: "This username is already taken."
+                    username: "Email or username is already taken."
+
                 })
             } else {
                 const newUser = new User({
@@ -62,7 +67,7 @@ router.post('/signup', (req, res) => {
                 });
             }
         })
-        .catch(err => console.log(err));;
+        .catch(err => console.log(err));
 })
 
 // @route   POST api/users/login
