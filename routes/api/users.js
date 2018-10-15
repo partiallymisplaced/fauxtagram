@@ -33,7 +33,7 @@ router.post('/signup', (req, res) => {
     if (!isValid){
         return res.status(400).json(errors);
     }
-
+  
     const username = req.body.username;
     const email = req.body.email;
 
@@ -42,6 +42,7 @@ router.post('/signup', (req, res) => {
             if(user){
                 return res.status(400).json({
                     username: "Email or username is already taken."
+
                 })
             } else {
                 const newUser = new User({
