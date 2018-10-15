@@ -6,7 +6,7 @@ const Profile = require('../../models/Profile');
 // @route   GET api/profile
 // @desc    Get current user profile
 // @access  Private
-router.get('/', passport.authenticate('jwt', {session: false}),
+router.get('/',
   (req,res) => {
     let errors = {};
     Profile.findOne({user: req.user.id})
@@ -50,5 +50,48 @@ router.post('/', passport.authenticate('jwt', {session: false}),
         }
       });
   })
+
+
+// @route   POST api/profile/follow
+// @desc    Create or edit user profile
+// @access  Private
+router.post('/follow', passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    let errors = {};
+    
+    if (!req.body.userIdToFollow) {
+        errors.noprofile = 'A user to follow must be specified.';
+        return res.status(400).json(errors);
+    }
+
+    // Add to current user's following array
+    Profile.findOne({user: req.user.id})
+      .then(profile => {
+        if (profile) {
+          console.log("Found profile to add following.")
+          profile.following.push({userId: req.body.userIdToFollow});
+          profile.save();
+          
+          // Add to followers array of user being followed.
+          Profile.findOne({user: req.body.userIdToFollow})
+          .then(profile2 => {
+            if (profile2) {
+              console.log("Found profile to add followers.")
+              profile2.followers
+              .push({userId: req.user.id})
+              .save();
+            } else {
+                errors.noprofile = 'Profile not found.';
+                return res.status(404).json(errors);
+            }
+          })
+          .then(profile2 => res.json(profile));          
+        } else {
+            errors.noprofile = 'Profile not found.';
+            return res.status(404).json(errors);
+        }
+      });
+  }
+)
 
 module.exports = router;
