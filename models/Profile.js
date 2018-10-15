@@ -19,22 +19,16 @@ const ProfileSchema = new Schema({
         required: false
     },
     followers: [{
-        userId: {
-            type: Schema.Types.ObjectId,
-            ref: 'users'
-        }
+        type: Schema.Types.ObjectId,
+        ref: 'users'
     }],
     following: [{
-        userId: {
-            type: Schema.Types.ObjectId,
-            ref: 'users'
-        }
+        type: Schema.Types.ObjectId,
+        ref: 'users'
     }],
     posts: [{
-        postId: {
-            type: Schema.Types.ObjectId,
-            ref: 'posts'
-        }
+        type: Schema.Types.ObjectId,
+        ref: 'posts'
     }]
 });
     
