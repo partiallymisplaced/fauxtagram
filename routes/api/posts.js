@@ -33,7 +33,7 @@ router.post('/', passport.authenticate('jwt', {session: false}),
     let errors = {};
     
     if (!req.body.mediaUrl) {
-        errors.noprofile = 'A post must have a media file.';
+        errors.missingMediaUrl = 'A post must have a media file.';
         return res.status(400).json(errors);
     }
 
