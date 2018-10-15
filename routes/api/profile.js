@@ -51,9 +51,8 @@ router.post('/', passport.authenticate('jwt', {session: false}),
       });
   })
 
-
 // @route   POST api/profile/follow
-// @desc    Create or edit user profile
+// @desc    Follow a user
 // @access  Private
 router.post('/follow', passport.authenticate('jwt', {session: false}),
   (req, res) => {
@@ -64,7 +63,6 @@ router.post('/follow', passport.authenticate('jwt', {session: false}),
         return res.status(400).json(errors);
     }
 
-    // Add to current user's following array
     Profile.findOne({user: req.user.id})
       .then(myProfile => {
         if (myProfile) {
@@ -83,6 +81,55 @@ router.post('/follow', passport.authenticate('jwt', {session: false}),
               }
             })
           });
+        } else {
+            errors.noprofile = 'Profile not found.';
+            return res.status(404).json(errors);
+        }
+      });
+  }
+)
+// @route   POST api/profile/unfollow
+// @desc    Unfollow a user
+// @access  Private
+router.post('/unfollow', passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    let errors = {};
+    
+    if (!req.body.userIdToUnfollow) {
+        errors.noprofile = 'A user to unfollow must be specified.';
+        return res.status(400).json(errors);
+    }
+
+    Profile.findOne({user: req.user.id})
+      .then(myProfile => {
+        if (myProfile) {
+          var indexOfFollowingToRemove = myProfile.following.indexOf(req.body.userIdToUnfollow);
+          if (indexOfFollowingToRemove > -1) {
+            myProfile.following.splice(indexOfFollowingToRemove, 1);
+            myProfile.save()
+            .then(profile => {
+              Profile.findOne({user: req.body.userIdToUnfollow})
+              .then(profileBeingFollowed => {
+                if (profileBeingFollowed) {
+                  var indexOfFollowersToRemove = profileBeingFollowed.followers.indexOf(req.user.id);
+                  if (indexOfFollowersToRemove > -1) {
+                    profileBeingFollowed.followers.splice(indexOfFollowersToRemove, 1);
+                    profileBeingFollowed.save()
+                    .then(updatedProfileBeingFollowed => res.json(profile));                
+                  }
+                  else{
+                    res.json(profile)
+                  }
+                } else {
+                    errors.noprofile = 'Profile not found.';
+                    return res.status(404).json(errors);
+                }
+              })
+            });  
+          }
+          else {
+            res.json(profile)
+          }
         } else {
             errors.noprofile = 'Profile not found.';
             return res.status(404).json(errors);
