@@ -88,6 +88,7 @@ router.post('/follow', passport.authenticate('jwt', {session: false}),
       });
   }
 )
+
 // @route   POST api/profile/unfollow
 // @desc    Unfollow a user
 // @access  Private

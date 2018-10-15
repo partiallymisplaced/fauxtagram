@@ -58,4 +58,72 @@ router.post('/', passport.authenticate('jwt', {session: false}),
   }
 )
 
+// @route   POST api/posts/like
+// @desc    Follow a user
+// @access  Private
+router.post('/like', passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    let errors = {};
+    
+    if (!req.body.likedPostId) {
+        errors.noLikedPostId = 'A likedPostId must be specified.';
+        return res.status(400).json(errors);
+    }
+
+    Post.findById(req.body.likedPostId)
+      .then(foundPost => {
+        if (foundPost) {
+          var indexOfExistingLike = foundPost.likes.indexOf(req.user.id);
+          if (indexOfExistingLike < 0) {
+            foundPost.likes.push(req.user.id);
+            foundPost.save()
+            .then(foundPost2 => {
+              res.json(foundPost)
+            });
+          }
+          else{
+            res.json(foundPost)
+          }
+        } else {
+            errors.noprofile = 'Post not found.';
+            return res.status(404).json(errors);
+        }
+      });
+  }
+)
+
+// @route   POST api/posts/unlike
+// @desc    Follow a user
+// @access  Private
+router.post('/unlike', passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    let errors = {};
+    
+    if (!req.body.unlikedPostId) {
+        errors.noUnlikedPostId = 'An unlikedPostId must be specified.';
+        return res.status(400).json(errors);
+    }
+
+    Post.findById(req.body.unlikedPostId)
+      .then(foundPost => {
+        if (foundPost) {
+          var indexOfExistingLike = foundPost.likes.indexOf(req.user.id);
+          if (indexOfExistingLike > -1) {
+            foundPost.likes.splice(indexOfExistingLike, 1);
+            foundPost.save()
+            .then(foundPost2 => {
+              res.json(foundPost)
+            });
+          }
+          else{
+            res.json(foundPost)
+          }
+        } else {
+            errors.noprofile = 'Post not found.';
+            return res.status(404).json(errors);
+        }
+      });
+  }
+)
+
 module.exports = router;
