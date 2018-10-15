@@ -37,27 +37,6 @@ router.post('/signup', (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
 
-    // User.findOne({$or: [{username: username}, {email: email}]})
-    // .then(console.log(username))
-    // .then(console.log(email))
-    // .then(user => {
-    //     console.log(user);
-    //     if (user) {
-    //         console.log(username)
-    //         console.log(user.username)
-    //         console.log(email)
-    //         console.log(user.email)
-    //         if((username !== user.username) && (email === user.email)) {
-    //             console.log("Username in use")
-    //         } else if (username === user.username && email !== user.email) {
-    //             console.log("Email in use");
-    //         }
-    //     } else {
-    //         console.log("Yeah, that's a new user.")
-    //     }
-    // })
-
-
     User.findOne({ $or: [{ username: username }, { email: email }] })
     .then(user => {
             if(user){
