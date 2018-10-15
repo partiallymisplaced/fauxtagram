@@ -66,26 +66,23 @@ router.post('/follow', passport.authenticate('jwt', {session: false}),
 
     // Add to current user's following array
     Profile.findOne({user: req.user.id})
-      .then(profile => {
-        if (profile) {
-          console.log("Found profile to add following.")
-          profile.following.push({userId: req.body.userIdToFollow});
-          profile.save();
-          
-          // Add to followers array of user being followed.
-          Profile.findOne({user: req.body.userIdToFollow})
-          .then(profile2 => {
-            if (profile2) {
-              console.log("Found profile to add followers.")
-              profile2.followers
-              .push({userId: req.user.id})
-              .save();
-            } else {
-                errors.noprofile = 'Profile not found.';
-                return res.status(404).json(errors);
-            }
-          })
-          .then(profile2 => res.json(profile));          
+      .then(myProfile => {
+        if (myProfile) {
+          myProfile.following.push(req.body.userIdToFollow);
+          myProfile.save()
+          .then(profile => {
+            Profile.findOne({user: req.body.userIdToFollow})
+            .then(profileBeingFollowed => {
+              if (profileBeingFollowed) {
+                profileBeingFollowed.followers.push(req.user.id);
+                profileBeingFollowed.save()
+                .then(updatedProfileBeingFollowed => res.json(profile));                
+              } else {
+                  errors.noprofile = 'Profile not found.';
+                  return res.status(404).json(errors);
+              }
+            })
+          });
         } else {
             errors.noprofile = 'Profile not found.';
             return res.status(404).json(errors);
