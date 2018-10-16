@@ -106,14 +106,11 @@ router.post(
   (req, res) => {
     Post.findById(req.params.postId)
     .then(post => {
-      console.log(req.user)
       const newComment = new Comment({
         author: req.user.id,
         body: req.body.body,
       })
-      newComment.save();
       post.comments.push(newComment);
-      console.log(newComment);
       post.save()
         .then(post => res.json(post))
     })

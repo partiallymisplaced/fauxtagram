@@ -6,10 +6,10 @@ const Profile = require('../../models/Profile');
 // @route   GET api/profile
 // @desc    Get current user profile
 // @access  Private
-router.get('/',
+router.get('/:id',
   (req,res) => {
     let errors = {};
-    Profile.findOne({user: req.user.id})
+    Profile.findOne({user: req.params.id})
       .populate('user', ['username'])
       .then(profile => {
         if (!profile) {
