@@ -28,6 +28,42 @@ router.get('/',
 // @route   POST api/posts/
 // @desc    Create or edit user profile
 // @access  Private
+router.delete('/', passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    let errors = {};
+    
+    if (!req.body.postIdToDelete) {
+        errors.missingPostIdToDelete = 'A post ID to delete must be specified.';
+        return res.status(400).json(errors);
+    }
+
+    Profile.findOne({user: req.user.id})
+    .then(myProfile => {
+      let indexOfPost = myProfile.posts.indexOf(req.body.postIdToDelete);
+      if (indexOfPost > -1) {
+        myProfile.posts.splice(indexOfPost, 1);
+        myProfile.save()
+        .then(() => {
+          Post.findByIdAndRemove(req.body.postIdToDelete)
+          .then((err, deletedPost) => {
+            if (deletedPost){
+              res.status(204);
+            }
+            else{
+              return res.status(404).json(err);
+            }
+          });
+        });
+      }
+      else{
+        errors.noprofile = 'Post was not found or does not belong to current user.';
+        return res.status(404).json(errors);  }
+    });
+  }
+)
+// @route   POST api/posts/
+// @desc    Create or edit user profile
+// @access  Private
 router.post('/', passport.authenticate('jwt', {session: false}),
   (req, res) => {
     let errors = {};
@@ -50,7 +86,7 @@ router.post('/', passport.authenticate('jwt', {session: false}),
             profile.save().then(profile => res.json(profile));
 
           } else {
-              errors.noprofile = 'Profile not found.';
+              errors.noprofile = 'Post not found.';
               return res.status(404).json(errors);
           }
         });
