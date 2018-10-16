@@ -4,6 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
+// const Comment = require('../../models/Post');
 
 // @route   GET api/posts
 // @desc    Get the specified user and all its posts.
@@ -90,7 +91,56 @@ router.post('/', passport.authenticate('jwt', {session: false}),
               return res.status(404).json(errors);
           }
         });
-    });
+    })
+    .catch(err => console.log(err));
+  }
+)
+
+// @route   POST api/posts/:postId/comment
+// @desc    Enables adding comments to posts  
+// @access  Private
+
+router.post(
+  '/:postId/comment',
+  passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    Post.findById(req.params.postId)
+    .then(post => {
+      console.log(req.user)
+      const newComment = new Comment({
+        author: req.user.id,
+        body: req.body.body,
+      })
+      newComment.save();
+      post.comments.push(newComment);
+      console.log(newComment);
+      post.save()
+        .then(post => res.json(post))
+    })
+    .catch(err => console.log(err));
+  }
+)
+
+// @route   DELETE api/posts/:postId/:commentId
+// @desc    Enables deleting of comments to posts
+// @access  Private
+
+router.delete(
+  '/:postId/:commentId',
+  passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    Post.findById(req.params.postId)
+    .then(post => {
+      for (let commentIndex in post.comments) {
+        if (post.comments[commentIndex].id === req.params.commentId) {
+          console.log(commentIndex);
+          post.comments = post.comments.splice(1, 0);
+          post.save();
+          return;
+        }
+      }
+    })
+    .catch(err => console.log(err))
   }
 )
 
