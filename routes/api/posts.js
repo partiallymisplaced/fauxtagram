@@ -87,7 +87,7 @@ router.post('/', passport.authenticate('jwt', {session: false}),
             profile.save().then(profile => res.json(profile));
 
           } else {
-              errors.noprofile = 'Post not found.';
+              errors.noPost = 'Post not found.';
               return res.status(404).json(errors);
           }
         });
@@ -106,14 +106,11 @@ router.post(
   (req, res) => {
     Post.findById(req.params.postId)
     .then(post => {
-      console.log(req.user)
       const newComment = new Comment({
         author: req.user.id,
         body: req.body.body,
       })
-      newComment.save();
       post.comments.push(newComment);
-      console.log(newComment);
       post.save()
         .then(post => res.json(post))
     })
@@ -129,18 +126,25 @@ router.delete(
   '/:postId/:commentId',
   passport.authenticate('jwt', {session: false}),
   (req, res) => {
-    Post.findById(req.params.postId)
-    .then(post => {
-      for (let commentIndex in post.comments) {
-        if (post.comments[commentIndex].id === req.params.commentId) {
-          console.log(commentIndex);
-          post.comments = post.comments.splice(1, 0);
-          post.save();
-          return;
-        }
-      }
+    let errors = {};
+
+    if (!req.params.postId){
+      errors.missingPostId = 'A post ID must have a media file.';
+      return res.status(400).json(errors);
+    }
+
+    if (!req.params.postId){
+      errors.missingPostId = 'A comment ID must have a media file.';
+      return res.status(400).json(errors);
+    }
+
+    Post
+    .update({"_id": req.params.postId}, { $pull: {"comments": { "_id": req.params.commentId}}})
+    .exec()
+    .then(updateInfo => {
+      res.json(updateInfo);
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));      
   }
 )
 
