@@ -12,7 +12,7 @@ const CommentSchema = new Schema({
     },
     date: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     }
 });
 
@@ -27,7 +27,7 @@ const PostSchema = new Schema({
     },
     date: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     },
     comments: [CommentSchema],
     likes: [{
@@ -36,4 +36,5 @@ const PostSchema = new Schema({
     }]
 });
 
+module.exports = Comment = mongoose.model('comment', CommentSchema);
 module.exports = Post = mongoose.model('posts', PostSchema);
