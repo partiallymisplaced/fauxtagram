@@ -12,8 +12,12 @@
   },
   "author": "C2T3",
   "contributors": [
-    { "name": "Eury Rivera" },
-    { "name": "Nevena Stoeva" }
+    {
+      "name": "Eury Rivera"
+    },
+    {
+      "name": "Nevena Stoeva"
+    }
   ],
   "license": "ISC",
   "dependencies": {
