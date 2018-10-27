@@ -400,6 +400,16 @@ div.pre-auth {
   cursor: pointer;
 }
 
+.invalid-input-field {
+  border-bottom: 1px solid #C50000 !important;
+}
+
+.invalid-input-message {
+  color: #C50000;
+  font-size: 13px;
+  margin: -16px 0 16px 0;
+}
+
 /* Background bubbles */
 .background-bubbles {
   background-color: #2C008A;

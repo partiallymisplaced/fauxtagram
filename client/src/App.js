@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <Router>
         <div className="pre-auth">
-          <Header/>
+          <Header />
           <Route exact path='/' component={Signup} />
           <Route exact path="/login" component={Login} />
           <Bubbles />
