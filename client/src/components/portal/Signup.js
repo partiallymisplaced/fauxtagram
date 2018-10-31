@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { signUserUp } from '../../actions/authActions';
+
 
 class Signup extends Component {
   constructor(props) {
@@ -30,10 +33,13 @@ class Signup extends Component {
       fullName: this.state.fullName,
       password: this.state.password,
     }
+    this.props.signUserUp(newUser, this.props.history);
+  }
 
-    axios.post('/api/users/signup', newUser)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState({errors: err.response.data}))
+  componentWillReceiveProps(nextProps){
+    if(nextProps.errors){
+      this.setState({errors: nextProps.errors});
+    }
   }
 
   render() {
@@ -106,4 +112,17 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+Signup.propTypes = {
+  signUserUp: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors,
+
+})
+
+export default connect(mapStateToProps, {signUserUp})(Signup);
