@@ -1,18 +1,19 @@
-import { GET_ERRORS } from '../actions/types';
+import { SET_CURRENT_USER } from '../actions/types';
+import isEmpty from '../validation/is-empty';
 
 const initalState = {
   isAuthenticated: false,
   user: {}
 }
 
-export default function(state = initalState, action){
-  switch(action.type){
-    case GET_ERRORS:
+export default function (state = initalState, action) {
+  switch (action.type) {
+    case SET_CURRENT_USER:
       return {
         ...state,
-        user: action.payload
+        isAuthenticated: !isEmpty(action.payload)
       }
-    default: 
+    default:
       return state;
   }
 }

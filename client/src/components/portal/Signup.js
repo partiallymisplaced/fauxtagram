@@ -44,7 +44,7 @@ class Signup extends Component {
 
   render() {
 
-    const {errors} = this.state;
+    const { errors } = this.state;
 
     return (
       <div className="container">
