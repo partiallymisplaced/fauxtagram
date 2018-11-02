@@ -1,0 +1,475 @@
+/* Global */
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #2C008A;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Add image */
+.add-image {
+  color: #FFF;
+  font-size: 2em;
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+  background-color: #2C008A;
+  border: none;
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  z-index: 100;
+}
+
+/* Inputs */
+input[type=text],
+input[type=email],
+input[type=password] {
+  padding: 6px 0;
+  border: none;
+  border-bottom: 1px solid #323232;
+}
+
+input[type=button] {
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button.button-primary {
+  color: #FFF;
+  padding: 6px 12px;
+  background-color: #2C008A;
+}
+
+.button.button-secondary {
+  color: #323232;
+  border: 2px solid #323232;
+  background-color: #FFF;
+  padding: 5px 10px;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 600px;
+  padding: 10px 0;
+  background-color: #FFF;
+  border-bottom: 1px solid #323232;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+header h1 {
+  font-weight: 400;
+}
+
+header a {
+  color: #323232;
+}
+
+header .header-icon {
+  font-size: 1.9em;
+}
+
+.logo {
+  font-family: 'Leckerli One', cursive;
+  text-transform: lowercase;
+}
+
+main {
+  margin-top: 68px;
+}
+
+img {
+  max-width: 600px;
+  height: 100%;
+  width: 100%;
+}
+
+/* Empty feed */
+.empty-feed-intro {
+  margin: 0 auto;
+  padding: 300px 0;
+  text-align: center;
+  width: 30%;
+}
+
+.empty-feed-intro {
+  text-align: center;
+}
+
+/* Post */
+.post {
+  padding-bottom: 32px;
+}
+
+.post-author {
+  padding: 10px 0;
+}
+
+.post-author a {
+  color: #323232;
+  display: flex;
+  align-items: center;
+}
+
+.profile-image {
+  height: 39px;
+  width: 39px;
+  display: inline-block;
+  padding-right: 12px;
+}
+
+.profile-image i {
+  font-size: 39px;
+}
+
+.post-author p {
+  display: inline-block;
+  font-weight: 600;
+}
+
+.post-image {
+  position: relative;
+}
+
+.post-likes {
+  color: #989898;
+}
+
+.like-button {
+  position: absolute;
+  margin: 0;
+  top: 30px;
+  right: 30px;
+  font-size: 2.4em;
+  line-height: 0;
+  text-shadow: 0px 0px 13px rgba(0, 0, 0, .3);
+  background-color: transparent;
+  border: none;
+}
+
+.like-button.not-liked {
+  color: #FFF;
+}
+
+.like-button.liked {
+  color: #EDA5FF;
+}
+
+.post-info > * {
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.post-comment-author {
+  font-weight: 600;
+}
+
+/* Add comment to post */
+.add-comment {
+  padding-top: 20px; 
+  width: 100%;
+  display: flex;
+}
+
+.add-comment input[type=text] {
+  margin-right: 20px;
+  width: calc(90% - 20px);
+}
+.add-comment input[type=button] {
+  width: 10%;
+}
+
+/* User profile */
+.user-profile {
+  display: flex;
+  font-size: 13px;
+  padding-top: 12px; 
+  position: relative; 
+}
+
+.user-profile-avatar {
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+  margin-right: 20px;
+}
+
+.user-profile-avatar i {
+  font-size: 80px;
+}
+
+.user-profile-info .username,
+.user-profile-info .full-name,
+.user-profile-info .website {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.user-profile-info .username {
+  padding-top: 12px;
+}
+
+.user-profile .bio {
+  padding-top: 12px;
+}
+
+.user-action-button {
+  font-weight: 600;
+  position: absolute;
+  top: 24px;
+  right: 0;
+  height: 42px;
+  width: 140px;
+}
+
+button.user-action-button.follow-user {
+  color: #FFF;
+  background-color: #2C008A;
+  border: 2px solid #2C008A;
+}
+
+button.user-action-button.unfollow-user,
+button.user-action-button.edit-profile {
+  color: #323232;
+  background-color: #FFF;
+  border: 2px solid #323232;
+}
+
+.user-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0 48px;
+}
+
+.user-stats > * {
+  margin-right: 24px;
+  font-size: 18px;
+  color: #989898;
+}
+.stat-highlight {
+  font-size: 24px;
+  color: #323232;
+}
+
+/* Log out button */
+button.log-out {
+  font-weight: 600;
+  color: #323232;
+  background-color: #FFF;
+  border: 2px solid #323232;
+  padding: 6px 12px;
+}
+
+/* Edit */
+form.edit-user-profile {
+  width: 65%;
+  margin: 0 auto;
+}
+
+form > * {
+  width: 100%;
+}
+
+form label {
+  font-weight: 600;
+}
+
+form textarea {
+  resize: none;
+  border-color: #323232;
+  margin-bottom: 12px;
+}
+
+form input[type=text],
+form input[type=email],
+form input[type=password] {
+  margin-bottom: 24px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+form input[type=button] {
+  width: 48%;
+  padding: 12px;
+  font-size: 16px;
+}
+
+form div.button-group input[type=button].button-primary {
+  color: #FFF;
+  background-color: #2C008A;
+  border: 2px solid #2C008A;
+}
+
+form div.button-group input[type=button].button-secondary {
+  color: #323232;
+  background-color: #FFF;
+  border: 2px solid #323232;
+}
+
+/* Front-facing pages (sign up & log in) */
+
+div.pre-auth {
+  height: 100vh;
+  background-repeat: no-repeat;
+}
+
+.pre-auth header {
+  color: #FFF;
+  background-color: transparent;
+  border-bottom: none;
+  display: block;
+  padding: 20px 40px;
+}
+
+.pre-auth header p {
+  text-align: left;
+  margin-top: 0;
+  font-size: 16px;
+}
+
+.pre-auth .container {
+  width: 100vw;
+  padding: 120px;
+}
+
+.pre-auth main {
+  background-color: #FFF;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 40px;
+  color: #2C008A;
+  width: 280px;
+}
+
+.pre-auth h2 {
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+.pre-auth p {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 24px;
+}
+
+.pre-auth a {
+  text-decoration: underline;
+}
+
+.pre-auth form input[type=text],  
+.pre-auth form input[type=email],  
+.pre-auth form input[type=password]{
+  border-bottom-color: #2C008A;
+  padding: 12px 0;
+}
+.pre-auth form input::placeholder {
+  color: #989898;
+  font-size: 14px;
+}
+
+.pre-auth form input[type=submit] {
+  background-color: #EDA5FF;
+  background: linear-gradient(100deg, rgba(255, 243, 213, 1) 24%, rgba(237, 165, 255, 1) 100%);
+  color: #2C008A;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.invalid-input-field {
+  border-bottom: 1px solid #C50000 !important;
+}
+
+.invalid-input-message {
+  color: #C50000;
+  font-size: 13px;
+  margin: -16px 0 16px 0;
+}
+
+/* Background bubbles */
+.background-bubbles {
+  background-color: #2C008A;
+  background: linear-gradient(125deg, rgba(120,71,226,1) 0%, rgba(44,0,138,1) 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -100;
+}
+
+.bubble {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.2);
+  filter: blur(2px);
+}
+
+.small {
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+}
+.medium {
+  height: 240px;
+  width: 240px;
+  border-radius: 120px;
+}
+.large {
+  height: 300px;
+  width: 300px;
+  border-radius: 150px;
+}
+
+.bubble-1 {
+  top: 120px;
+  left: 200px;
+}
+
+.bubble-2 {
+  top: 60px;
+  right: 240px;
+}
+
+.bubble-3 {
+  top: 600px;
+  right: 200px;
+}
+
+.bubble-4 {
+  top: 240px;
+  left: 260px;
+}
+
+.bubble-5 {
+  top: 440px;
+  left: 10px;
+}
+
+.bubble-6 {
+  top: 380px;
+  right: 50px;
+}
