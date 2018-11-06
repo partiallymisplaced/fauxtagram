@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
+import Signup from './components/auth/Signup';
+import Login from './components/auth/Login';
+import './App.css';
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Header from './components/layout/Header';
-import Signup from './components/portal/Signup';
-import Login from './components/portal/Login';
-import Bubbles from './components/layout/Bubbles';
 import { Provider } from 'react-redux';
 import store from './store';
 import jwt_decode from 'jwt-decode';
-import './App.css';
 
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser } from './actions/authActions';
@@ -23,11 +22,9 @@ class App extends Component {
     return (
         <Provider store={store}>
         <Router>
-          <div className="pre-auth">
-            <Header />
+          <div>
             <Route exact path='/' component={Signup} />
             <Route exact path="/login" component={Login} />
-            <Bubbles />
           </div>
         </Router>
       </Provider>
