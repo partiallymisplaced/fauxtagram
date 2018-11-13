@@ -6,7 +6,7 @@ const Profile = require('../../models/Profile');
 // @route   GET api/profile
 // @desc    Get current user profile
 // @access  Private
-router.get('/:id',
+router.get('user/:id',
   (req,res) => {
     let errors = {};
     Profile.findOne({user: req.params.id})
@@ -22,7 +22,27 @@ router.get('/:id',
   }
 )
 
-// @route   POST api/profile
+// @route   GET api/profile/all
+// @desc    Gets all user profiles
+// @access  Public
+
+router.get('/all', (req, res) => {
+  let errors = {};
+  
+  Profile.find()
+  .populate('user', ['username'])
+  .then(profiles => {
+    if (profiles.length === 0) {
+      console.log(res.status);
+      errors.profiles = "No profiles found";
+      return res.status(404).json(errors);
+    }
+    res.json(profiles);
+  })
+  .catch(err => res.status(404).json({profile: "No profiles available at this time"}))
+})
+
+// @route   POST api/profile                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 // @desc    Create or edit user profile
 // @access  Private
 router.post('/', passport.authenticate('jwt', {session: false}),
