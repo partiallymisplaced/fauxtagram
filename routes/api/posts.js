@@ -1,10 +1,9 @@
-
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
-// const Comment = require('../../models/Post');
+const Comment = require('../../models/Comment');
 
 // @route   GET api/posts
 // @desc    Get the specified user and all its posts.
