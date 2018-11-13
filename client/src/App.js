@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
 import Feed from './components/feed/Feed';
+import UserList from './components/users/UserList';
 import './App.css';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path='/' component={Signup} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/feed" component={Feed} />
+            <Route exact path="/userlist" component={UserList} />
           </div>
         </Router>
       </Provider>

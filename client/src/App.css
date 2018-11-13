@@ -136,6 +136,12 @@ img {
   display: inline-block;
   padding-right: 12px;
 }
+.profile-image img {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+}
 
 .profile-image i {
   font-size: 39px;
@@ -232,13 +238,45 @@ img {
   padding-top: 12px;
 }
 
+.user-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #989898;
+  padding: 12px 0;
+}
+
+.user-profile-summary {
+  display: flex;
+  color: #323232;
+}
+
+.user-profile-summary .profile-image {
+  margin: auto 0;
+}
+
+.user-profile-summary .username {
+  font-weight: 600;
+}
+
+.user-profile-summary .full-name {
+  font-size: 14px;
+}
+
 .user-action-button {
   font-weight: 600;
+  height: 42px;
+  width: 140px;
+}
+
+.user-action-button.profile {
   position: absolute;
   top: 24px;
   right: 0;
-  height: 42px;
-  width: 140px;
+}
+
+.user-action-button.summary {
+  float: right;
 }
 
 button.user-action-button.follow-user {
