@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AppHeader from '../headers/AppHeader';
+import ProfileHeader from '../headers/ProfileHeader';
 import PostButton from '../post/PostButton';
 import PostSummary from '../post/PostSummary';
 import PropTypes from 'prop-types';
@@ -12,7 +13,8 @@ export class Feed extends Component {
   render() {
     return (
       <div className="container">
-        <AppHeader />
+        <ProfileHeader />
+        {/* <AppHeader /> */}
         <PostButton />
         <main>
           <div className="post">

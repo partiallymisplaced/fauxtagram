@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import profileReducer from '../../reducers/profileReducer';
 
 export class UserSummary extends Component {
   render() {
@@ -22,8 +21,8 @@ export class UserSummary extends Component {
             <p className="full-name">{profile.user.fullName}</p>
           </div>
         </a>
-        <button class="user-action-button summary follow-user">
-          <i class="fas fa-plus"></i> Follow
+        <button className="user-action-button summary follow-user">
+          <i className="fas fa-plus"></i> Follow
         </button>
       </div>
     )

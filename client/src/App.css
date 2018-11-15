@@ -215,8 +215,15 @@ img {
 .user-profile-avatar {
   height: 80px;
   width: 80px;
-  border-radius: 40px;
+  /* border-radius: 40px; */
   margin-right: 20px;
+}
+
+.user-profile-avatar img {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
 }
 
 .user-profile-avatar i {

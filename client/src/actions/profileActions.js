@@ -8,13 +8,17 @@ import {
 // Get user profile
 export const getUserProfile = () => 
   dispatch => {
-    axios.get('/api/profile/:id')
+    axios.get('/api/profile')
     .then(res => dispatch({
-      type: GET_PROFILE
-    }))
+      type: GET_PROFILE,
+      payload: res.data
+       
+      }))
     .catch(err => dispatch({
-      type: GET_ERRORS,
-      payoad: err.response.data
+      // type: GET_ERRORS,
+      // payoad: err.response.data
+      type: GET_PROFILE,
+      payload: null
     }))
   }
   

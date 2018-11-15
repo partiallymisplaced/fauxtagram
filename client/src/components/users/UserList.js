@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getAllUserProfiles } from '../../actions/profileActions';
 import PropTypes from 'prop-types';
 import AppHeader from '../headers/AppHeader';
+import ProfileHeader from '../headers/ProfileHeader';
 import PostButton from '../post/PostButton';
 import UserSummary from './UserSummary';
 
@@ -17,7 +18,7 @@ export class UserList extends Component {
     let userSummaries;
 
     if ( profiles === null ) {
-      console.log('whelp.')
+      console.log('No profiles in UserList.')
     } else {
       if (profiles.length > 0){
         userSummaries = profiles.map(profile => (
@@ -30,7 +31,8 @@ export class UserList extends Component {
 
     return (
       <div className="container">
-        <AppHeader />
+        {/* <AppHeader /> */}
+        <ProfileHeader />
         <PostButton />
         <main>
           {userSummaries}
@@ -49,4 +51,4 @@ const mapStateToProps = state => ({
   profile: state.profile
 })
 
-export default connect(mapStateToProps, { getAllUserProfiles})(UserList);
+export default connect(mapStateToProps, { getAllUserProfiles })(UserList);

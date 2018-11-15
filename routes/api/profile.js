@@ -6,10 +6,11 @@ const Profile = require('../../models/Profile');
 // @route   GET api/profile
 // @desc    Get current user profile
 // @access  Private
-router.get('user/:id',
+router.get('/',
+  passport.authenticate('jwt', { session: false }),
   (req,res) => {
-    let errors = {};
-    Profile.findOne({user: req.params.id})
+    const errors = {};
+    Profile.findOne({user: req.user.id})
       .populate('user', ['username'])
       .then(profile => {
         if (!profile) {
@@ -18,7 +19,7 @@ router.get('user/:id',
         }
         res.json(profile);
       })
-      .catch(err => res.status(400).json(err));
+      .catch(err => res.status(404).json(err));
   }
 )
 
