@@ -4,28 +4,62 @@ const passport = require('passport');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
 const Comment = require('../../models/Comment');
+const validatePostInput = require('../../validation/post');
+
 
 // @route   GET api/posts
 // @desc    Get the specified user and all its posts.
 // @access  Private
-router.get('/',
-  (req,res) => {
-    let errors = {};
-    Profile.findOne({user: req.query.userId})
-      .populate('user', ['username'])
-      .populate('posts')
-      .then(profile => {
-        if (!profile) {
-          errors.noprofile = 'There is no profile for this user';
-          return res.status(404).json(errors);
-        }
-        res.json(profile);
-      })
-      .catch(err => res.status(400).json(err));
-  }
-)
+// router.get('/',
+//   (req,res) => {
+//     let errors = {};
+//     Profile.findOne({user: req.query.userId})
+//       .populate('user', ['username'])
+//       .populate('posts')
+//       .then(profile => {
+//         if (!profile) {
+//           errors.noprofile = 'There is no profile for this user';
+//           return res.status(404).json(errors);
+//         }
+//         res.json(profile);
+//       })
+//       .catch(err => res.status(400).json(err));
+//   }
+// )
+
+router.get('/', (req, res) => {
+  Post.find()
+    .sort({ date: -1 })
+    .then(posts => res.json(posts))
+    .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
+});
 
 // @route   POST api/posts/
+// @desc    Create or edit user profile
+// @access  Private
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const newPost = new Post({
+      user: req.user.id,
+      username: req.user.username,
+      // avatar: req.profile.avatar,
+      url: req.body.url,
+      comment: req.body.comment,
+    });
+
+    newPost.save().then(post => res.json(post));
+  }
+);
+
+// @route   DELETE api/posts/
 // @desc    Create or edit user profile
 // @access  Private
 router.delete('/', passport.authenticate('jwt', {session: false}),
@@ -61,40 +95,7 @@ router.delete('/', passport.authenticate('jwt', {session: false}),
     });
   }
 )
-// @route   POST api/posts/
-// @desc    Create or edit user profile
-// @access  Private
-router.post('/', passport.authenticate('jwt', {session: false}),
-  (req, res) => {
-    let errors = {};
-    
-    if (!req.body.mediaUrl) {
-        errors.missingMediaUrl = 'A post must have a media file.';
-        return res.status(400).json(errors);
-    }
-
-    const postFields = {};
-    postFields.mediaUrl = req.body.mediaUrl;
-
-    new Post(postFields)
-    .save()
-    .then(createdPost => {
-      Profile.findOne({user: req.user.id})
-        .then(profile => {
-          if (profile) {
-            profile.posts.push(createdPost._id);
-            profile.save().then(profile => res.json(profile));
-
-          } else {
-              errors.noPost = 'Post not found.';
-              return res.status(404).json(errors);
-          }
-        });
-    })
-    .catch(err => console.log(err));
-  }
-)
-
+  
 // @route   POST api/posts/:postId/comment
 // @desc    Enables adding comments to posts  
 // @access  Private

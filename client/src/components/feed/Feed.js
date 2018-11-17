@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
-import AppHeader from '../headers/AppHeader';
 import ProfileHeader from '../headers/ProfileHeader';
 import PostButton from '../post/PostButton';
 import PostSummary from '../post/PostSummary';
+import { getPosts } from '../../actions/postActions';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 export class Feed extends Component {
-  static propTypes = {
-
+  componentDidMount() {
+    this.props.getPosts();
   }
 
   render() {
+    const { posts } = this.props.post;
+    let postContent;
+
+    if (posts === null) {
+      postContent = (<p>No posts</p>)
+    } else {
+      postContent = (<p>Yes posts</p>)
+    }
+    
     return (
       <div className="container">
         <ProfileHeader />
-        {/* <AppHeader /> */}
         <PostButton />
         <main>
+          {posts.map(post => (
+          <PostSummary post={post} id={post._id}/>
+          ))}
           <div className="post">
             <div className="post-author">
               <a href="user-profile.html">
@@ -51,9 +63,6 @@ export class Feed extends Component {
               </div>
             </div>
           </div>
-          <PostSummary />
-          <PostSummary />
-          <PostSummary />
       </main>
     </div>
 
@@ -61,4 +70,12 @@ export class Feed extends Component {
   }
 }
 
-export default Feed;
+Feed.propTypes = {
+  getPosts: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  post: state.post
+})
+
+export default connect(mapStateToProps, { getPosts })(Feed);
