@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAllUserProfiles } from '../../actions/profileActions';
 import PropTypes from 'prop-types';
-import AppHeader from '../headers/AppHeader';
 import ProfileHeader from '../headers/ProfileHeader';
 import PostButton from '../post/PostButton';
 import UserSummary from './UserSummary';

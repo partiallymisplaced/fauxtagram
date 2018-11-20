@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import AppHeader from '../headers/AppHeader';
 import ProfileHeader from '../headers/ProfileHeader';
 import PostButton from '../post/PostButton';
 import { getUserProfile } from '../../actions/profileActions';
@@ -30,7 +30,7 @@ export class Profile extends Component {
             <div className="user-profile-info">
               <p className="username">{user.username}</p>
               <p className="full-name"></p>
-              <a href="#" target="_blank" className="website"></a>
+              <Link to={'/'} href={profile.website} target="_blank" className="website"></Link>
 
               <button className="user-action-button profile edit-profile">
                 <i className="fas fa-pen"></i> Edit profile
@@ -60,7 +60,7 @@ export class Profile extends Component {
           <div className="user-profile">
             {profile.avatar ?
               <div className="user-profile-avatar">
-                <img src={profile.avatar} />
+                <img src={profile.avatar} alt={user.username}/>
               </div>
               :
               <div className="user-profile-avatar">
@@ -71,7 +71,7 @@ export class Profile extends Component {
             <div className="user-profile-info">
               <p className="username">{user.username}</p>
               <p className="full-name">{user.fullName}</p>
-              <a href="#" target="_blank" className="website">{profile.website}</a>
+              <Link to='{profile.website}' className="website"> target="_blank"{profile.website}</Link>
 
               <button className="user-action-button profile edit-profile">
                 <i className="fas fa-pen"></i> Edit profile

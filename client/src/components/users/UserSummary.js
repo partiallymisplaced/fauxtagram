@@ -10,7 +10,7 @@ export class UserSummary extends Component {
         <a href="user-profile.html" className="user-profile-summary">
           {profile.avatar ?
           <div className="profile-image">
-            <img src={profile.avatar} />
+            <img src={profile.avatar} alt={profile.user.username}/>
           </div>
           :
           <div className="profile-image"> 

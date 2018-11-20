@@ -9,12 +9,12 @@ export default function(state = intialState, action){
   switch(action.type) {
     case GET_PROFILE: 
       return {
-        ... state,
+        ...state,
         profile: action.payload
       };
     case GET_ALL_PROFILES: 
       return {
-        ... state,
+        ...state,
         profiles: action.payload
       }
     default: 

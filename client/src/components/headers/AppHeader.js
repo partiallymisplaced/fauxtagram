@@ -5,10 +5,10 @@ export class AppHeader extends Component {
     return (
       <div>
         <header>
-          <a href="#" className="header-icon">
+          <a href="/" className="header-icon">
             <i className="fas fa-home"></i>
           </a>
-          <a href="#">
+          <a href="/">
             <h1 className="logo">Fauxtagram</h1>
           </a>
           <a href="/profile-current.html" className="header-icon">

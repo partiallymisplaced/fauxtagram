@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PostForm from './PostForm';
 
 export class PostButton extends Component {
   render() {
