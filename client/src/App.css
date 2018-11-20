@@ -43,19 +43,22 @@ input[type=password] {
   border-bottom: 1px solid #323232;
 }
 
-input[type=button] {
+input[type=button],
+input[type=submit] {
   border: none;
   font-weight: 600;
   cursor: pointer;
 }
 
-.button.button-primary {
+.button.button-primary,
+input[type=submit].button-primary {
   color: #FFF;
   padding: 6px 12px;
   background-color: #2C008A;
 }
 
-.button.button-secondary {
+.button.button-secondary,
+input[type=submit] .button-secondary {
   color: #323232;
   border: 2px solid #323232;
   background-color: #FFF;
@@ -315,13 +318,17 @@ button.user-action-button.edit-profile {
   color: #323232;
 }
 
-/* Log out button */
-button.log-out {
+/* Profile Header Links */
+
+.profile-header {
+  margin: 0 0 0 24px;
   font-weight: 600;
-  color: #323232;
-  background-color: #FFF;
+}
+
+.profile-header.profile-header-button {
   border: 2px solid #323232;
   padding: 6px 12px;
+
 }
 
 /* Edit */
@@ -355,7 +362,8 @@ form input[type=password] {
   justify-content: space-between;
 }
 
-form input[type=button] {
+form input[type=button],
+form input[type=submit], {
   width: 48%;
   padding: 12px;
   font-size: 16px;
@@ -453,6 +461,57 @@ div.pre-auth {
   color: #C50000;
   font-size: 13px;
   margin: -16px 0 16px 0;
+}
+
+
+/* Post Form Styles */
+.post-form {
+  color: #2C008A;
+  background-color: #2C008A;
+  height: 100vh;
+  width: 100vw;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.post-form-container {
+  background-color: #FFF;
+  width: 280px;
+  padding: 36px 48px;
+}
+.post-form-container h2 {
+  padding-bottom: 24px;
+}
+.post-form-container input[type=text],
+.post-form-container textarea {
+  border-color: #2C008A;
+  padding: 9px;
+  width: calc(100% - 24px);
+}
+
+.post-form-container form label {
+  display: block;
+  padding-bottom: 9px;
+}
+
+.post-form-button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-form-button-group > * {
+  font-size: 16px;
+  width: 48%;
+  
+}
+form div.post-form-button-group input[type=button].button-secondary {
+  color: #323232;
+  background-color: #FFF;
+  border: 2px solid #323232;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
 }
 
 /* Background bubbles */

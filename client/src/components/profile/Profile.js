@@ -15,6 +15,7 @@ export class Profile extends Component {
   render() {
     const { user } = this.props.auth;
     const { profile } = this.props.profile;
+    const { posts } = this.props.post;
 
     let profileSummary;
 
@@ -39,7 +40,7 @@ export class Profile extends Component {
 
               <div className="user-stats">
                 <div className="posts">
-                  <span className="stat-highlight">0</span> posts
+                  <span className="stat-highlight">{posts.length}</span> posts
                 </div>
                 <div className="following">
                   <span className="stat-highlight">0</span> following
@@ -114,11 +115,13 @@ Profile.propTypes = {
   getUserProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  posts: PropTypes.array
 }
 
 const mapStateToProps = state => ({
   profile: state.profile,
   auth: state.auth,
+  post: state.post
 })
 
 export default connect(mapStateToProps, { getUserProfile })(Profile);

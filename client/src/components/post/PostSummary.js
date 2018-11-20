@@ -28,7 +28,7 @@ export class PostSummary extends Component {
 
           <div className="post-info">
             <div className="post-likes">
-              <p>{post.likes.value} likes</p>
+              <p>{post.likes.length} likes</p>
             </div>
 
             <div className="post-comment">

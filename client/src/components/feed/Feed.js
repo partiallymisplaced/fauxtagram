@@ -27,7 +27,7 @@ export class Feed extends Component {
         <PostButton />
         <main>
           {posts.map(post => (
-          <PostSummary post={post} id={post._id}/>
+          <PostSummary post={post} key={post._id}/>
           ))}
           <div className="post">
             <div className="post-author">

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
 import Feed from './components/feed/Feed';
+import PostForm from './components/post/PostForm';
 import UserList from './components/users/UserList';
 import Profile from './components/profile/Profile';
 import './App.css';
@@ -39,6 +40,7 @@ class App extends Component {
             <Route exact path="/feed" component={Feed} />
             <Route exact path="/userlist" component={UserList} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/post" component={PostForm} />
           </div>
         </Router>
       </Provider>

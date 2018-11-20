@@ -14,12 +14,16 @@ export class ProfileHeader extends Component {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
       <div>
+        <Link to="/userlist"
+          className="profile-header profile-header-link">Users
+        </Link>
+
         <Link to="/profile" 
-          className="log-out">Profile
+          className="profile-header profile-header-link">Profile
         </Link>
         
         <Link to="/" 
-          className="log-out" 
+          className="profile-header profile-header-button" 
           onClick={this.onLogoutClick.bind(this)}>Log out
         </Link>
       </div>
@@ -27,17 +31,17 @@ export class ProfileHeader extends Component {
 
     const guestLinks = (
       <div>
-        <Link to="/" className="log-out">Sign up</Link>
-        <Link to="/login" className="log-out">Log in</Link>
+        <Link to="/" className="profile-header profile-header-button">Sign up</Link>
+        <Link to="/login" className="profile-header profile-header-button">Log in</Link>
       </div>
     )
 
     return (
       <div>
         <header>
-          <Link to="/feed" className="header-icon">
+          {/* <Link to="/feed" className="header-icon">
             <i className="fas fa-home"></i>
-          </Link>
+          </Link> */}
           <Link to="/feed">
             <h1 className="logo">Fauxtagram</h1>
           </Link>
